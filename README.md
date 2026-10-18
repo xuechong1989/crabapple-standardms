@@ -217,6 +217,8 @@ curl -X POST http://127.0.0.1:8080/api/crabapple/standardms/user/getList \
 
 完整配置见 [application.properties.example](src/main/resources/application.properties.example)。
 
+> 配置读取顺序：`t_properties` 中 `alias_` 命中且值非空时优先；没有记录或值为空时回退到 `application.properties`。
+
 | 配置 | 说明 |
 |---|---|
 | `server.port` | 服务端口，默认 `8080` |

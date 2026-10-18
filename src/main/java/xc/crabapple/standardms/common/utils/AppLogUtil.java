@@ -50,7 +50,7 @@ public class AppLogUtil {
                 }
                 SystemlogDao systemlogDao = new SystemlogDao();
                 // 参数信息
-                if ("/api/crabapple/standardms/login/login".equals(requestURI)) {
+                if ("/api/crabapple/standardms/login/loginByPwd".equals(requestURI)) {
                     systemlogDao.setModule("登录");
                     systemlogDao.setOperation("账号密码登录");
                     systemlogDao.setAccount(map.get("account").toString());

@@ -315,6 +315,9 @@ public class LoginServiceImpl {
         String account = userDto.getAccount();
         String password = userDto.getPassword();
         String email = userDto.getEmail();
+        if(StringUtil.isBlank(password)){
+            return S2cDto.failure("请输入密码！");
+        }
         //判断用户到底使用账号密码还是邮箱登录
         UserDao userDao = new UserDao();
         boolean validMobile = RegexUtil.isMobile(mobile);

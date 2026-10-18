@@ -5,6 +5,7 @@ import xc.crabapple.standardms.common.domain.dao.PropertiesDao;
 import xc.crabapple.standardms.common.domain.dto.S2cDto;
 import org.springframework.stereotype.Service;
 import xc.crabapple.core.cipher.sm4.Sm4Util;
+import xc.crabapple.core.file.properties.PropertiesUtil;
 import xc.crabapple.core.collection.StringUtil;
 import xc.crabapple.core.json.jackson.JacksonUtil;
 import xc.crabapple.core.log.LogUtil;
@@ -60,11 +61,10 @@ public class PropertiesServiceImpl {
     public String getString(String key, String defaultValue) {
         try {
             PropertiesDao propertiesDao = getSysProperties(key);
-            if (propertiesDao == null) {
-                return defaultValue;
+            if (propertiesDao == null || StringUtil.isBlank(propertiesDao.getValue())) {
+                return PropertiesUtil.getValue(key, defaultValue);
             }
-            String value = propertiesDao.getValue();
-            return value;
+            return propertiesDao.getValue();
         } catch (Throwable throwable) {
             LogUtil.error("PropertiesServiceImpl_getString_t1", throwable, key, defaultValue);
             return "";
