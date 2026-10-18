@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xc.crabapple.standardms.module.user.UserMapper">
+
+    <resultMap id="User" type="xc.crabapple.standardms.common.domain.dao.UserDao">
+        <id property="id" column="id_" jdbcType="BIGINT"/>
+        <result property="account" column="account_" jdbcType="VARCHAR"/>
+        <result property="username" column="username_" jdbcType="VARCHAR"/>
+        <result property="password" column="password_" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile_" jdbcType="VARCHAR"/>
+        <result property="idNumber" column="id_number_" jdbcType="VARCHAR"/>
+        <result property="email" column="email_" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender_" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday_" jdbcType="VARCHAR"/>
+        <result property="address" column="address_" jdbcType="VARCHAR"/>
+        <result property="createUserId" column="create_user_id_" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time_" jdbcType="VARCHAR"/>
+        <result property="updateUserId" column="update_user_id_" jdbcType="BIGINT"/>
+        <result property="updateTime" column="update_time_" jdbcType="VARCHAR"/>
+        <result property="loginCount" column="login_count_" jdbcType="INTEGER"/>
+        <result property="from" column="from_" jdbcType="VARCHAR"/>
+        <result property="status" column="status_" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="create">
+        INSERT INTO t_user(id_, account_, username_, password_, mobile_, id_number_, email_, gender_, birthday_, address_,
+                           create_user_id_, create_time_, update_user_id_, update_time_, login_count_, from_, status_)
+        VALUES (#{id}, #{account}, #{username}, #{password}, #{mobile}, #{idNumber}, #{email}, #{gender}, #{birthday}, #{address},
+                #{createUserId}, #{createTime}, #{updateUserId}, #{updateTime}, #{loginCount}, #{from}, #{status})
+    </insert>
+
+    <update id="update">
+        update t_user
+        <set>
+            <if test="account != null">
+                account_ = #{account},
+            </if>
+            <if test="username != null">
+                username_ = #{username},
+            </if>
+            <if test="password != null">
+                password_ = #{password},
+            </if>
+            <if test="mobile != null">
+                mobile_ = #{mobile},
+            </if>
+            <if test="email != null">
+                email_ = #{email},
+            </if>
+            <if test="gender != null">
+                gender_ = #{gender},
+            </if>
+            <if test="birthday != null">
+                birthday_ = #{birthday},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id_ = #{updateUserId}
+            </if>
+            <if test="updateTime != null">
+                update_time_ = #{updateTime}
+            </if>
+        </set>
+        where id_ = #{id}
+    </update>
+
+    <select id="selectList" resultMap="User">
+        select * from t_user
+        <where>
+            <if test="id != null">
+                and id_ = #{id}
+            </if>
+            <if test="account != null">
+                and account_ like CONCAT('%',#{account},'%')
+            </if>
+            <if test="username != null">
+                and username_ like CONCAT('%',#{username},'%')
+            </if>
+            <if test="mobile != null">
+                and mobile_ like CONCAT('%',#{mobile},'%')
+            </if>
+            <if test="email != null">
+                and email_ like CONCAT('%',#{email},'%')
+            </if>
+            <if test="gender != null">
+                and gender_ = #{gender}
+            </if>
+            <if test="birthday != null">
+                and birthday_ = #{birthday}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByMobile" resultMap="User">
+        select *
+        from t_user
+        where mobile_ = #{mobile}
+    </select>
+
+    <select id="selectByEmail" resultMap="User">
+        select *
+        from t_user
+        where email_ = #{email}
+    </select>
+
+    <select id="selectByAccount" resultMap="User">
+        select *
+        from t_user
+        where account_ = #{account}
+    </select>
+
+    <select id="selectById" resultMap="User">
+        select *
+        from t_user
+        where id_ = #{id}
+    </select>
+
+
+</mapper>

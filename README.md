@@ -29,7 +29,7 @@
 crabapple-standardms
 ├── pom.xml
 └── src/main
-    ├── java/com/cdk/standardms
+    ├── java/xc/crabapple/standardms
     │   ├── common          配置、领域对象、工具类
     │   └── module          用户 / 登录 / 短信 / 配置 / 日志 / 首页
     └── resources

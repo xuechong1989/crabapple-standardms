@@ -9,7 +9,7 @@
     <description>Crabapple Standard MS - 用户、登录、短信与系统日志服务（基于 crabapple-commons 构建）</description>
 
 
-    <groupId>com.cdk</groupId>
+    <groupId>xc.crabapple</groupId>
     <artifactId>crabapple-standardms</artifactId>
     <version>21-4.2.00</version>
 
@@ -68,7 +68,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${springboot.version}</version>
                 <configuration>
-                    <mainClass>com.cdk.standardms.StandardmsApplication</mainClass>
+                    <mainClass>xc.crabapple.standardms.StandardmsApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
