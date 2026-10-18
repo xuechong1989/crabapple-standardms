@@ -15,7 +15,7 @@
     </resultMap>
 
     <insert id="create">
-        INSERT INTO t_sms(id_,mobile_,valid_code_,valid_code_exp_,create_user_id_,create_time_,update_user_id_,update_time_)
+        INSERT INTO t_sms(id_,mobile_,valid_code_,valid_code_time_,create_user_id_,create_time_,update_user_id_,update_time_)
         VALUES(#{id},#{mobile},#{validCode},#{validCodeExp},#{createUserId},#{createTime},#{updateUserId},#{updateTime})
     </insert>
 

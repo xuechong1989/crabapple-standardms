@@ -57,7 +57,14 @@ cp src/main/resources/application.properties.example src/main/resources/applicat
 
 ### 3. 初始化数据库
 
-在 MySQL 中创建数据库（默认 `crabapple_standardms`），并按下表准备业务表。字段定义可参考 `src/main/java/com/cdk/standardms/module/**/*Mapper.xml` 与对应 DAO。
+在 MySQL 中创建数据库（默认 `crabapple_standardms`），执行仓库内的建表脚本：
+
+```bash
+mysql -u root -p -e "CREATE DATABASE crabapple_standardms DEFAULT CHARACTER SET utf8mb4;"
+mysql -u root -p crabapple_standardms < src/main/resources/schema.sql
+```
+
+建表脚本仅用于新库；已有数据请自行迁移。
 
 | 表 | 用途 |
 | --- | --- |
