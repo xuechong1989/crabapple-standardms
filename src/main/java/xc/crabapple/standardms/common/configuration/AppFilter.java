@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import xc.crabapple.core.collection.StringUtil;
+import xc.crabapple.standardms.common.domain.dao.UserDao;
+import xc.crabapple.standardms.common.utils.ContextUtil;
 import xc.crabapple.core.log.LogUtil;
 import xc.crabapple.core.servlet.ServletUtil;
 import xc.crabapple.ssm.spring.SpringUtil;
@@ -51,9 +53,31 @@ public class AppFilter extends SsmFilter {
                 return;
             }
             //
-            if(true){
+            // 非 API 路径（favicon、错误页等）直接放行
+            if(!requestURI.startsWith("/api/")){
                 filterChain.doFilter(request, response);
+                return;
             }
+            // 登录/注册/发短信/健康检查为公开接口
+            if(StringUtil.containOfOne(requestURI,
+                    "/api/crabapple/standardms/index/main",
+                    "/api/crabapple/standardms/index/heart",
+                    "/api/crabapple/standardms/login/register",
+                    "/api/crabapple/standardms/login/sendSms",
+                    "/api/crabapple/standardms/login/loginByPwd",
+                    "/api/crabapple/standardms/login/loginBySms")){
+                filterChain.doFilter(request, response);
+                return;
+            }
+            // 其余接口必须携带登录 token
+            UserDao currentUser = ContextUtil.getCurrentUser();
+            if(currentUser == null){
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                AppResponseBodyAdvice.sendJson2client(false, "not_login", "未登录或登录已失效");
+                return;
+            }
+            ContextUtil.tokenMonitor();
+            filterChain.doFilter(request, response);
         }catch (Throwable throwable){
             final String requestURI = ServletUtil.getRequestURI();
             LogUtil.error("AppFilter_doFilter_t1", throwable, "过滤器异常", requestURI);

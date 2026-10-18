@@ -2,7 +2,7 @@
 -- 仅用于新建数据库；如需保留已有数据，请自行迁移，不要直接覆盖生产库。
 
 CREATE TABLE IF NOT EXISTS `t_user` (
-  `id_` bigint NOT NULL COMMENT '用户ID',
+  `id_` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `account_` varchar(64) NOT NULL COMMENT '登录账号',
   `username_` varchar(64) DEFAULT NULL COMMENT '显示名称',
   `password_` varchar(100) NOT NULL COMMENT 'BCrypt 口令摘要',
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `t_sms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='短信验证码';
 
 CREATE TABLE IF NOT EXISTS `t_systemlog` (
-  `id_` bigint NOT NULL COMMENT '日志ID',
+  `id_` bigint NOT NULL AUTO_INCREMENT COMMENT '日志ID',
   `module_` varchar(64) DEFAULT NULL COMMENT '模块',
   `operation_` varchar(128) DEFAULT NULL COMMENT '操作',
   `account_` varchar(64) DEFAULT NULL COMMENT '账号',
