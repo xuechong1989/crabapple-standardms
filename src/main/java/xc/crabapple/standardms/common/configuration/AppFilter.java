@@ -77,6 +77,11 @@ public class AppFilter extends SsmFilter {
                 return;
             }
             ContextUtil.tokenMonitor();
+            if(ContextUtil.getCurrentUser() == null){
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                AppResponseBodyAdvice.sendJson2client(false, "not_login", "登录已过期，请重新登录");
+                return;
+            }
             filterChain.doFilter(request, response);
         }catch (Throwable throwable){
             final String requestURI = ServletUtil.getRequestURI();
