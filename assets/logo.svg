@@ -14,13 +14,11 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <path d="M 392 112 C 402 70 438 44 474 48 C 470 88 442 116 400 120 C 414 104 426 88 436 72 C 422 82 406 94 392 112 Z" fill="#4F9D69"/>
-  <path d="M 398 116 C 418 102 438 86 454 66" fill="none" stroke="#2F6F49" stroke-width="8" stroke-linecap="round"/>
   <rect x="128" y="136" width="256" height="66" rx="33" fill="url(#paper)"/>
   <rect x="128" y="220" width="256" height="66" rx="33" fill="url(#paperDeep)"/>
   <rect x="128" y="304" width="256" height="66" rx="33" fill="url(#paper)"/>
   <circle cx="170" cy="169" r="12" fill="#B3123B"/>
   <circle cx="170" cy="253" r="12" fill="#B3123B"/>
   <circle cx="170" cy="337" r="12" fill="#B3123B"/>
-  <path d="M 302 342 L 326 366 L 372 314" fill="none" stroke="#4F9D69" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 302 342 L 326 366 L 372 314" fill="none" stroke="#E63B5F" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
