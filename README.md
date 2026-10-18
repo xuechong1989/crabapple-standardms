@@ -1,4 +1,8 @@
+<p align="center"><img src="assets/logo-128.png" width="96" height="96" alt="Crabapple Standard MS" /></p>
+
 # Crabapple Standard MS（海棠标准管理服务）
+
+> 品牌色：海棠红 `#B3123B` · 海棠粉 `#E63B5F` · 叶绿 `#4F9D69`
 
 基于 [crabapple-commons](https://github.com/xuechong1989/crabapple-commons) 构建的 Spring Boot 4 标准管理服务示例，包含用户、登录、短信验证码、配置、系统日志与安全过滤。
 
