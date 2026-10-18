@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+    <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <name>crabapple-standardms</name>
+    <description>Crabapple Standard MS - 用户、登录、短信与系统日志服务（基于 crabapple-commons 构建）</description>
+
+
+    <groupId>com.cdk</groupId>
+    <artifactId>crabapple-standardms</artifactId>
+    <version>21-4.2.00</version>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>xuechong1989</id>
+            <name>xuechong1989</name>
+            <url>https://github.com/xuechong1989</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/xuechong1989/crabapple-standardms.git</connection>
+        <developerConnection>scm:git:https://github.com/xuechong1989/crabapple-standardms.git</developerConnection>
+        <url>https://github.com/xuechong1989/crabapple-standardms</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <crabapple.version>21-4.2.00</crabapple.version>
+        <java.version>21</java.version>
+        <springboot.version>4.1.0</springboot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+
+        <sourceDirectory>src/main/java</sourceDirectory>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+                <configuration>
+                    <mainClass>com.cdk.standardms.StandardmsApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.5.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.15.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <dependencies>
+
+
+        <!-- MAVEN公共仓库 START -->
+        <!-- MAVEN公共仓库 END -->
+        <!-- 应用依赖 -->
+        <!-- Spring Boot / MyBatis / Druid：crabapple-commons 中的集成依赖均为 optional，
+             应用侧需显式声明自己的运行时依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.28</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>26.7.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- 自有模块依赖 -->
+        <!-- xuechong 2026-06-15 研发需求-0103 精简pom依赖：排除crabapple-commons中项目不需要的传递依赖 -->
+        <dependency>
+            <groupId>xc.crabapple</groupId>
+            <artifactId>crabapple-commons</artifactId>
+            <version>${crabapple.version}</version>
+            <exclusions>
+                <!-- 视频处理（JavaCV全家桶，含全平台原生库） -->
+                <exclusion><groupId>org.bytedeco</groupId><artifactId>javacv-platform</artifactId></exclusion>
+                <exclusion><groupId>org.bytedeco</groupId><artifactId>javacv</artifactId></exclusion>
+                <exclusion><groupId>org.bytedeco</groupId><artifactId>javacpp</artifactId></exclusion>
+                <!-- 浏览器自动化（Selenium） -->
+                <exclusion><groupId>org.seleniumhq.selenium</groupId><artifactId>selenium-java</artifactId></exclusion>
+                <exclusion><groupId>org.seleniumhq.selenium</groupId><artifactId>selenium-devtools-v132</artifactId></exclusion>
+                <!-- PDF处理（iText + PDFBox + Spire） -->
+                <exclusion><groupId>com.itextpdf</groupId><artifactId>html2pdf</artifactId></exclusion>
+                <exclusion><groupId>com.itextpdf</groupId><artifactId>itextpdf</artifactId></exclusion>
+                <exclusion><groupId>com.itextpdf</groupId><artifactId>kernel</artifactId></exclusion>
+                <exclusion><groupId>org.apache.pdfbox</groupId><artifactId>pdfbox</artifactId></exclusion>
+                <exclusion><groupId>e-iceblue</groupId><artifactId>spire.pdf</artifactId></exclusion>
+                <!-- Office文档（POI + Docx4j） -->
+                <exclusion><groupId>org.apache.poi</groupId><artifactId>poi</artifactId></exclusion>
+                <exclusion><groupId>org.apache.poi</groupId><artifactId>poi-ooxml</artifactId></exclusion>
+                <exclusion><groupId>org.apache.poi</groupId><artifactId>poi-scratchpad</artifactId></exclusion>
+                <exclusion><groupId>org.docx4j</groupId><artifactId>docx4j-core</artifactId></exclusion>
+                <exclusion><groupId>org.docx4j</groupId><artifactId>docx4j-JAXB-MOXy</artifactId></exclusion>
+                <exclusion><groupId>org.docx4j</groupId><artifactId>docx4j-JAXB-ReferenceImpl</artifactId></exclusion>
+                <!-- OCR（Tesseract） -->
+                <exclusion><groupId>net.sourceforge.tess4j</groupId><artifactId>tess4j</artifactId></exclusion>
+                <!-- 文档转换 -->
+                <exclusion><groupId>com.github.livesense</groupId><artifactId>jodconverter-core</artifactId></exclusion>
+                <!-- 对象存储（MinIO） -->
+                <exclusion><groupId>io.minio</groupId><artifactId>minio</artifactId></exclusion>
+                <!-- Redis高级客户端（Redisson） -->
+                <exclusion><groupId>org.redisson</groupId><artifactId>redisson</artifactId></exclusion>
+                <!-- 验证码 -->
+                <exclusion><groupId>com.anji-plus</groupId><artifactId>captcha</artifactId></exclusion>
+                <exclusion><groupId>com.google.code.kaptcha</groupId><artifactId>kaptcha</artifactId></exclusion>
+                <!-- 二维码 -->
+                <exclusion><groupId>com.google.zxing</groupId><artifactId>core</artifactId></exclusion>
+                <!-- MP3音频处理 -->
+                <exclusion><groupId>com.mpatric</groupId><artifactId>mp3agic</artifactId></exclusion>
+                <!-- 图片缩略图 -->
+                <exclusion><groupId>net.coobird</groupId><artifactId>thumbnailator</artifactId></exclusion>
+                <!-- HTML压缩 -->
+                <exclusion><groupId>in.wilsonl.minifyhtml</groupId><artifactId>minify-html</artifactId></exclusion>
+                <!-- 旧版腾讯短信SDK -->
+                <exclusion><groupId>com.github.qcloudsms</groupId><artifactId>qcloudsms</artifactId></exclusion>
+                <!-- Jakarta扩展 -->
+                <exclusion><groupId>jakarta.mail</groupId><artifactId>jakarta.mail-api</artifactId></exclusion>
+                <exclusion><groupId>jakarta.xml.soap</groupId><artifactId>jakarta.xml.soap-api</artifactId></exclusion>
+                <exclusion><groupId>jakarta.xml.bind</groupId><artifactId>jakarta.xml.bind-api</artifactId></exclusion>
+                <exclusion><groupId>jakarta.activation</groupId><artifactId>jakarta.activation-api</artifactId></exclusion>
+                <!-- HTTP客户端（异步+HTTP/5） -->
+                <exclusion><groupId>org.apache.httpcomponents</groupId><artifactId>httpasyncclient</artifactId></exclusion>
+                <exclusion><groupId>org.apache.httpcomponents.client5</groupId><artifactId>httpclient5</artifactId></exclusion>
+                <!-- 其他不需要的工具库 -->
+                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-compress</artifactId></exclusion>
+                <exclusion><groupId>org.dom4j</groupId><artifactId>dom4j</artifactId></exclusion>
+                <exclusion><groupId>org.jsoup</groupId><artifactId>jsoup</artifactId></exclusion>
+            </exclusions>
+        </dependency>
+        <!-- MAVEN本地仓库-自有程序 END -->
+
+
+
+    </dependencies>
+
+
+
+</project>

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Install crabapple-commons
+        run: |
+          git clone --depth 1 https://github.com/xuechong1989/crabapple-commons.git /tmp/crabapple-commons
+          mvn -B -ntp -f /tmp/crabapple-commons/pom.xml install -DskipTests
+
+      - name: Build
+        run: mvn -B -ntp clean package
